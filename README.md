@@ -1,4 +1,4 @@
-![TrailSync Icon](https://github.com/matvdg/TrailSync/blob/0a134deca645da5a4c2fb8c98d3845ec29ea86ee/header.png)
+![TrailSync Icon](https://github.com/matvdg/TrailSync/blob/d9fa908a0e5cd1609e32810ed8302d2281683333/header.png)
 # TrailSync
 
 ## Description
