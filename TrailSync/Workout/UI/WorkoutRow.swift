@@ -4,15 +4,20 @@ import CoreLocation
 
 struct WorkoutRow: View {
     
-    @State var showMap = false
     @State var isLoading = false
     @State var isLoadingMap = false
-    @State var locations: [CLLocation] = []
+    
+    @Binding var locations: [CLLocation]
+    @Binding var showWorkoutMapView: Bool
+    
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
     
     var workout: HKWorkout
     
-    private let workoutManager = WorkoutManager.shared
- 
+    private let workoutRepository = WorkoutRepository()
+    private let trailRepository = TrailRepository()
+    
     private var distance: String {
         workout.totalDistance?.doubleValue(for: .meter()).toString ?? "_"
     }
@@ -24,8 +29,6 @@ struct WorkoutRow: View {
     var body: some View {
         
         HStack(spacing: 16) {
-            
-            WorkoutActivity.activity(from: workout.workoutActivityType).icon.imageScale(.large)
             
             VStack(alignment: .leading, spacing: 10) {
                 
@@ -47,9 +50,8 @@ struct WorkoutRow: View {
                     Task {
                         do {
                             isLoadingMap = true
-                            locations = try await workoutManager.getLocations(for: workout)
-                            guard !locations.isEmpty else { return }
-                            showMap = true
+                            locations = try await workoutRepository.getLocations(for: workout)
+                            showWorkoutMapView = true
                             isLoadingMap = false
                         } catch {
                             print(error)
@@ -65,25 +67,20 @@ struct WorkoutRow: View {
                     }
                 }
                 .disabled(isLoadingMap)
-                .buttonStyle(.borderedProminent)
+                .modifier(ButtonStyleProminentModifier())
                 Button {
                     Feedback.selected()
-                    if locations.isEmpty {
-                        Task {
-                            do {
-                                isLoading = true
-                                locations = try await workoutManager.getLocations(for: workout)
-                                // TODO
-//                                trailsToImport.insert(Trail(gpx: Gpx(name: name, description: description, locations: locations, date: Date())), at: 0)
-                                isLoading = false
-                            } catch {
-                                print(error)
-                                isLoading = false
-                            }
+                    Task {
+                        do {
+                            isLoading = true
+                            let locations = try await workoutRepository.getLocations(for: workout).map { Location(location: $0) }
+                            trailRepository.create(from: workout, locations: locations, context: context)
+                            isLoading = false
+                            dismiss()
+                        } catch {
+                            print(error)
+                            isLoading = false
                         }
-                    } else {
-                        //TODO
-//                        trailsToImport.insert(Trail(gpx: Gpx(name: name, description: description, locations: locations, date: Date())), at: 0)
                     }
                 } label: {
                     if isLoading {
@@ -94,21 +91,23 @@ struct WorkoutRow: View {
                     }
                 }
                 .disabled(isLoading)
-                .buttonStyle(.borderedProminent)                
+                .modifier(ButtonStyleProminentModifier())
             }
             
         }
         .padding(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
         .frame(height: 80.0)
-        .navigationDestination(isPresented: $showMap, destination: {
-            WorkoutMapView(coordinates: locations)
-        })
     }
+    
     
 }
 
 @available(iOS, deprecated: 17.0)
 #Preview {
+    
+    @Previewable @State var locations: [CLLocation] = []
+    @Previewable @State var showWorkoutMapView: Bool = false
+    
     let mockWorkout = HKWorkout(
         activityType: .hiking,
         start: Date().addingTimeInterval(-3600),
@@ -148,13 +147,12 @@ struct WorkoutRow: View {
         totalDistance: HKQuantity(unit: .meter(), doubleValue: 1200),
         metadata: [HKMetadataKeyIndoorWorkout : false]
     )
-    
     return NavigationStack {
         List {
-            WorkoutRow(workout: mockWorkout)
-            WorkoutRow(workout: mockWorkout2)
-            WorkoutRow(workout: mockWorkout3)
-            WorkoutRow(workout: mockWorkout4)
+            WorkoutRow(locations: $locations, showWorkoutMapView: $showWorkoutMapView, workout: mockWorkout, )
+            WorkoutRow(locations: $locations, showWorkoutMapView: $showWorkoutMapView, workout: mockWorkout2)
+            WorkoutRow(locations: $locations, showWorkoutMapView: $showWorkoutMapView, workout: mockWorkout3)
+            WorkoutRow(locations: $locations, showWorkoutMapView: $showWorkoutMapView, workout: mockWorkout4)
         }
     }
 }

@@ -13,19 +13,28 @@ struct WorkoutMapView: View {
 
         if !coordinates.isEmpty {
             let coords = coordinates.map { $0.coordinate }
-            let center: CLLocationCoordinate2D
-            if coords.count == 1 {
-                center = coords[0]
+            if let minLat = coords.map(\.latitude).min(),
+               let maxLat = coords.map(\.latitude).max(),
+               let minLon = coords.map(\.longitude).min(),
+               let maxLon = coords.map(\.longitude).max() {
+
+                let center = CLLocationCoordinate2D(
+                    latitude: (minLat + maxLat) / 2,
+                    longitude: (minLon + maxLon) / 2
+                )
+
+                let latDelta = (maxLat - minLat) * 1.5
+                let lonDelta = (maxLon - minLon) * 1.5
+
+                let region = MKCoordinateRegion(
+                    center: center,
+                    span: MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
+                )
+
+                self._position = State(initialValue: .region(region))
             } else {
-                let lat = coords.map { $0.latitude }.reduce(0, +) / Double(coords.count)
-                let lon = coords.map { $0.longitude }.reduce(0, +) / Double(coords.count)
-                center = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                self._position = State(initialValue: .automatic)
             }
-            let region = MKCoordinateRegion(
-                center: center,
-                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-            )
-            self._position = State(initialValue: .region(region))
         } else {
             self._position = State(initialValue: .automatic)
         }
@@ -34,9 +43,8 @@ struct WorkoutMapView: View {
     var body: some View {
         Map(position: $position) {
             if !coordinates.isEmpty {
-                MapPolygon(coordinates: coordinates.map { $0.coordinate })
-                    .stroke(.blue, lineWidth: 2)
-                    .foregroundStyle(.blue.opacity(0.3))
+                MapPolyline(coordinates: coordinates.map { $0.coordinate })
+                    .stroke(.red, lineWidth: 5)
             }
         }
         .mapControls {
@@ -48,5 +56,17 @@ struct WorkoutMapView: View {
 }
 
 #Preview {
-    WorkoutMapView(coordinates: [CLLocation(latitude: 1, longitude: 2)])
+    NavigationStack {
+        WorkoutMapView(coordinates: [
+            CLLocation(latitude: 42.83191, longitude: 1.03097),
+            CLLocation(latitude: 42.82659, longitude: 1.03883),
+            CLLocation(latitude: 42.81841, longitude: 1.04140),
+            CLLocation(latitude: 42.80900, longitude: 1.04951),
+            CLLocation(latitude: 42.80427, longitude: 1.05286),
+            CLLocation(latitude: 42.80031, longitude: 1.05951),
+            CLLocation(latitude: 42.79801, longitude: 1.06728),
+            CLLocation(latitude: 42.79747, longitude: 1.07239),
+            CLLocation(latitude: 42.79527, longitude: 1.07904),
+            CLLocation(latitude: 42.79533, longitude: 1.08393)
+        ])}
 }

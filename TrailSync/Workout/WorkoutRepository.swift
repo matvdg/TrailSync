@@ -3,10 +3,8 @@ import HealthKit
 import SwiftUI
 import CoreLocation
 
-class WorkoutManager {
-    
-    @MainActor static let shared = WorkoutManager()
-    
+class WorkoutRepository {
+        
     private let store = HKHealthStore()
     private let workoutType = HKObjectType.workoutType()
     private let workoutRouteType = HKSeriesType.workoutRoute()

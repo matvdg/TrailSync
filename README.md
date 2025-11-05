@@ -17,5 +17,4 @@ Trail Sync retrieves workouts from Apple Health (iPhone or Apple Watch), convert
 
 
 ## Feedbacks / feature request / bug
-
 Feel free to create an issue on GitHub or contact me: matvdg@me.com

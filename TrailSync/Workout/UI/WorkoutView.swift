@@ -1,5 +1,6 @@
 import SwiftUI
 import HealthKit
+import CoreLocation
 
 struct WorkoutView: View {
     
@@ -14,8 +15,10 @@ struct WorkoutView: View {
     @State private var sorting: Sorting = .date
     @State private var minDistance: Double = 0
     @State private var workouts: [HKWorkout] = []
+    @State var locations: [CLLocation] = []
+    @State var showWorkoutMapView: Bool = false
     
-    private let workoutManager = WorkoutManager.shared
+    private let workoutRepository = WorkoutRepository()
     
     private var sortedWorkouts: [HKWorkout] {
         // Sort
@@ -30,7 +33,6 @@ struct WorkoutView: View {
         sortedWorkouts = sortedWorkouts.filter { $0.workoutActivityType == workoutActivity.activity }
         
         // Filter by minDistance
-        
         sortedWorkouts = sortedWorkouts.filter { $0.totalDistance?.doubleValue(for: .meter()) ?? 0 >= minDistance }
         
         // Remove non importable workouts (without distance)
@@ -55,15 +57,15 @@ struct WorkoutView: View {
                 List {
                     
                     ForEach(sortedWorkouts, id: \.self) { workout in
-                        WorkoutRow(workout: workout)
+                        WorkoutRow(locations: $locations, showWorkoutMapView: $showWorkoutMapView, workout: workout)
                     }
                 }
             }
             .onAppear {
-                guard workoutManager.isAvailable else { return }
+                guard workoutRepository.isAvailable else { return }
                 Task {
                     do {
-                        workouts = try await workoutManager.getWorkouts(for: workoutActivity.activity)
+                        workouts = try await workoutRepository.getWorkouts(for: workoutActivity.activity)
                     } catch {
                         print(error)
                     }
@@ -94,6 +96,9 @@ struct WorkoutView: View {
             }
             .navigationTitle("Import")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: $showWorkoutMapView) {
+                WorkoutMapView(coordinates: locations)
+            }
     }
 }
 
