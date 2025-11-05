@@ -1,10 +1,8 @@
-![TrailSync Icon](https://github.com/matvdg/TrailSync/blob/9144ff751d4a28f6fe58ea04975344ff0079a099/Icon/icon.heic)
+![TrailSync Icon](https://github.com/matvdg/TrailSync/blob/0a134deca645da5a4c2fb8c98d3845ec29ea86ee/header.png)
 # TrailSync
 
 ## Description
 Convert, merge, and sync your Apple Health workouts as GPX across all your Apple devices.
-
-![TrailSync Icon](https://github.com/matvdg/TrailSync/blob/9144ff751d4a28f6fe58ea04975344ff0079a099/Icon/icon.heic)
 
 Trail Sync retrieves workouts from Apple Health (iPhone or Apple Watch), converts them into GPX files, merges tracks when needed, and syncs data seamlessly across macOS and watchOS using SwiftData.
 
