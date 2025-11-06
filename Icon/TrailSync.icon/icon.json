@@ -7,6 +7,7 @@
   },
   "groups" : [
     {
+      "hidden" : false,
       "layers" : [
         {
           "fill-specializations" : [
@@ -52,6 +53,7 @@
       }
     },
     {
+      "hidden" : false,
       "layers" : [
         {
           "fill-specializations" : [
@@ -89,6 +91,7 @@
       }
     },
     {
+      "hidden" : false,
       "layers" : [
         {
           "blend-mode" : "overlay",
@@ -112,7 +115,7 @@
             }
           ],
           "glass" : true,
-          "hidden" : false,
+          "hidden" : true,
           "image-name" : "bg.svg",
           "name" : "bg"
         }
@@ -127,6 +130,7 @@
       }
     },
     {
+      "hidden" : false,
       "layers" : [
         {
           "fill" : {
@@ -136,6 +140,7 @@
             ]
           },
           "glass" : true,
+          "hidden" : true,
           "image-name" : "mountains.svg",
           "name" : "mountains"
         }

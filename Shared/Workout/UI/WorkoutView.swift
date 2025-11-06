@@ -83,7 +83,6 @@ struct WorkoutView: View {
                     } label: {
                         Image(systemName: "arrow.up.arrow.down.circle")
                     }
-                    .modifier(ButtonStyleProminentModifier())
                     #else
                     Menu {
                         ForEach(Sorting.allCases) { sort in

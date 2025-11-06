@@ -55,16 +55,18 @@ struct TrailSyncApp: App {
     var body: some Scene {
         WindowGroup {
 #if os(macOS)
-            MacHomeView()
+            HomeView()
 #else
             NavigationStack {
                 HomeView()
+                #if os(iOS)
                     .navigationDestination(item: $quickActionCoordinator.launchedQuickAction) { shortcut in
                         shortcut.destinationView()
                     }
                     .onChange(of: scenePhase) {
                         UIApplication.shared.shortcutItems = WorkoutActivity.allCases.map { $0.shortcutItem }
                     }
+                #endif
             }
 #endif
         }
