@@ -55,7 +55,7 @@ struct TrailSyncApp: App {
     var body: some Scene {
         WindowGroup {
 #if os(macOS)
-            ContentView()
+            MacHomeView()
 #else
             NavigationStack {
                 HomeView()

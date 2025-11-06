@@ -3,32 +3,54 @@ import SwiftData
 
 struct MacHomeView: View {
     
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext) private var context
     @Query private var trails: [Trail]
+    
+    private let trailRepository = TrailRepository()
 
     var body: some View {
         NavigationSplitView {
-            List {
-                ForEach(trails) { trail in
-                    NavigationLink {
-                        Text("Trail at \(trail.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(trail.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+            Group {
+                if trails.isEmpty {
+                    VStack {
+                        ContentUnavailableView(
+                            "EmptyTrailsTitle",
+                            systemImage: "signpost.right.and.left",
+                            description: Text("EmptyTrailsDescription")
+                        )
+                        Spacer()
+                    }
+                } else {
+                    List {
+                        ForEach(trails) { trail in
+                            NavigationLink {
+                                TrailView(trail: trail)
+                            } label: {
+                                TrailRow(trail: trail)
+                            }
+                            .contextMenu {
+                                if #available(iOS 26, *) {
+                                    Button(role: .destructive) {
+                                        trailRepository.delete(trail: trail, context: context)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                } else {
+                                    // Fallback on earlier versions
+                                    Button {
+                                        trailRepository.delete(trail: trail, context: context)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
         } detail: {
-            Text("Select")
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(trails[index])
-            }
+            Label("SelectInSidebar", systemImage: "sidebar.left")
         }
     }
 }

@@ -9,4 +9,10 @@ class TrailRepository {
         context.insert(trail)
         do { try context.save() } catch { print("Save error:", error) }
     }
+    
+    func delete(trail: Trail, context: ModelContext) {
+        context.delete(trail)
+        do { try context.save() } catch { print("Save error:", error) }
+    }
+    
 }

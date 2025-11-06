@@ -1,28 +1,51 @@
 import Foundation
+import MapKit
 import SwiftData
 import CoreLocation
 #if canImport(HealthKit)
 import HealthKit
+internal import CoreGraphics
 #endif
+
 
 @Model
 final class Trail {
     
     var name: String = ""
     var timestamp: Date = Date()
-    @Relationship(deleteRule: .cascade, inverse: \Location.trail) var locations: [Location]? = []
-
+    @Relationship(deleteRule: .cascade, inverse: \Location.trail) var locations: [Location]?
+    
+    var sortedCLLocations: [CLLocation]? {
+        guard let locations else { return nil }
+        return locations
+            .filter { loc in
+                CLLocationCoordinate2DIsValid(loc.coordinate) &&
+                abs(loc.latitude) <= 90 &&
+                abs(loc.longitude) <= 180 &&
+                !(loc.latitude == 0 && loc.longitude == 0)
+            }
+            .sorted { $0.timestamp < $1.timestamp}
+            .map { $0.clLocation }
+    }
+    
     // HKWorkout properties
     var activityType: String = ""
+    
+    var workoutActivityType: WorkoutActivity {
+        WorkoutActivity(rawValue: activityType)!
+    }
+    
     var duration: TimeInterval = 0
     var totalDistance: Double = 0
+    
+    var isFav: Bool = false
 
     init(name: String,
          timestamp: Date = .now,
          activityType: String,
          duration: TimeInterval,
          totalDistance: Double,
-         locations: [Location]? = nil
+         locations: [Location]
     ) {
         self.name = name
         self.timestamp = timestamp
@@ -38,8 +61,9 @@ final class Trail {
         let activityTypeName = WorkoutActivity.activity(from: workout.workoutActivityType).id
         let duration = workout.duration
         let totalDistance = workout.totalDistance?.doubleValue(for: .meter()) ?? 0
+        let date = workout.startDate.toDateStyleShortString
         self.init(
-            name: activityTypeName,
+            name: date,
             timestamp: workout.startDate,
             activityType: activityTypeName,
             duration: duration,
@@ -48,6 +72,7 @@ final class Trail {
         )
     }
 #endif
+    
 }
 
 @Model

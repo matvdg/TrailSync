@@ -8,14 +8,73 @@
 
 /* Begin PBXBuildFile section */
 		F65E4B262EBBBEC800901C2B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F65E4B252EBBBEC800901C2B /* README.md */; };
+		F65E51B22EBCFB8E00901C2B /* TrailSyncWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = F65E51A82EBCFB8D00901C2B /* TrailSyncWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F65E51B02EBCFB8E00901C2B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F69E795E2EB7C45300991324 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F65E51A72EBCFB8D00901C2B;
+			remoteInfo = "TrailSyncWatch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F65E51B62EBCFB8E00901C2B /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				F65E51B22EBCFB8E00901C2B /* TrailSyncWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		F65E4B252EBBBEC800901C2B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F65E51A82EBCFB8D00901C2B /* TrailSyncWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TrailSyncWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F69E79662EB7C45300991324 /* TrailSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F65E51B92EBCFBC100901C2B /* Exceptions for "Shared" folder in "TrailSyncWatch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				AppIcon.icon,
+				Assets.xcassets,
+				Localizable.xcstrings,
+				Trail/Trail.swift,
+				Trail/TrailRepository.swift,
+				Trail/UI/TrailRow.swift,
+				Trail/UI/TrailView.swift,
+				Utils/ButtonModifier.swift,
+				"Utils/CLLocationDistance+String.swift",
+				"Utils/Date+String.swift",
+				Utils/FavButton.swift,
+				Utils/Feedback.swift,
+				Utils/FullScreenButton.swift,
+				Utils/SwiftData.swift,
+				"Utils/TimeInterval+String.swift",
+				Workout/UI/WorkoutMapView.swift,
+				Workout/UI/WorkoutRow.swift,
+				Workout/UI/WorkoutView.swift,
+				Workout/WorkoutActivity.swift,
+				Workout/WorkoutRepository.swift,
+			);
+			target = F65E51A72EBCFB8D00901C2B /* TrailSyncWatch Watch App */;
+		};
+		F65E51CF2EBD01A100901C2B /* Exceptions for "TrailSyncWatch Watch App" folder in "TrailSyncWatch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"TrailSyncWatch-Watch-App-Info.plist",
+			);
+			target = F65E51A72EBCFB8D00901C2B /* TrailSyncWatch Watch App */;
+		};
 		F69E79732EB7C45300991324 /* Exceptions for "TrailSync" folder in "TrailSync" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -26,6 +85,22 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		F65E51A92EBCFB8D00901C2B /* TrailSyncWatch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F65E51CF2EBD01A100901C2B /* Exceptions for "TrailSyncWatch Watch App" folder in "TrailSyncWatch Watch App" target */,
+			);
+			path = "TrailSyncWatch Watch App";
+			sourceTree = "<group>";
+		};
+		F65E51B72EBCFBA000901C2B /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F65E51B92EBCFBC100901C2B /* Exceptions for "Shared" folder in "TrailSyncWatch Watch App" target */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		F69E79682EB7C45300991324 /* TrailSync */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -37,6 +112,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F65E51A52EBCFB8D00901C2B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F69E79632EB7C45300991324 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,7 +134,9 @@
 			children = (
 				F65E4B252EBBBEC800901C2B /* README.md */,
 				F69E79682EB7C45300991324 /* TrailSync */,
+				F65E51A92EBCFB8D00901C2B /* TrailSyncWatch Watch App */,
 				F69E79672EB7C45300991324 /* Products */,
+				F65E51B72EBCFBA000901C2B /* Shared */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				F69E79662EB7C45300991324 /* TrailSync.app */,
+				F65E51A82EBCFB8D00901C2B /* TrailSyncWatch Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,6 +152,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F65E51A72EBCFB8D00901C2B /* TrailSyncWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F65E51B32EBCFB8E00901C2B /* Build configuration list for PBXNativeTarget "TrailSyncWatch Watch App" */;
+			buildPhases = (
+				F65E51A42EBCFB8D00901C2B /* Sources */,
+				F65E51A52EBCFB8D00901C2B /* Frameworks */,
+				F65E51A62EBCFB8D00901C2B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F65E51A92EBCFB8D00901C2B /* TrailSyncWatch Watch App */,
+			);
+			name = "TrailSyncWatch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "TrailSyncWatch Watch App";
+			productReference = F65E51A82EBCFB8D00901C2B /* TrailSyncWatch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F69E79652EB7C45300991324 /* TrailSync */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F69E79742EB7C45300991324 /* Build configuration list for PBXNativeTarget "TrailSync" */;
@@ -74,12 +181,15 @@
 				F69E79622EB7C45300991324 /* Sources */,
 				F69E79632EB7C45300991324 /* Frameworks */,
 				F69E79642EB7C45300991324 /* Resources */,
+				F65E51B62EBCFB8E00901C2B /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F65E51B12EBCFB8E00901C2B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				F65E51B72EBCFBA000901C2B /* Shared */,
 				F69E79682EB7C45300991324 /* TrailSync */,
 			);
 			name = TrailSync;
@@ -96,9 +206,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2600;
+				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
+					F65E51A72EBCFB8D00901C2B = {
+						CreatedOnToolsVersion = 26.1;
+					};
 					F69E79652EB7C45300991324 = {
 						CreatedOnToolsVersion = 26.0.1;
 					};
@@ -120,11 +233,19 @@
 			projectRoot = "";
 			targets = (
 				F69E79652EB7C45300991324 /* TrailSync */,
+				F65E51A72EBCFB8D00901C2B /* TrailSyncWatch Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F65E51A62EBCFB8D00901C2B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F69E79642EB7C45300991324 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -136,6 +257,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F65E51A42EBCFB8D00901C2B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F69E79622EB7C45300991324 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -145,7 +273,88 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F65E51B12EBCFB8E00901C2B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F65E51A72EBCFB8D00901C2B /* TrailSyncWatch Watch App */;
+			targetProxy = F65E51B02EBCFB8E00901C2B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		F65E51B42EBCFB8E00901C2B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TrailSyncWatch Watch App/TrailSyncWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3WAQF3AS82;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TrailSyncWatch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = TrailSyncWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "TrailSync needs your permission to read your workouts ant let you import them";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = fr.matvdg.TrailSync;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.matvdg.TrailSync.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Debug;
+		};
+		F65E51B52EBCFB8E00901C2B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TrailSyncWatch Watch App/TrailSyncWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3WAQF3AS82;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TrailSyncWatch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = TrailSyncWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "TrailSync needs your permission to read your workouts ant let you import them";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = fr.matvdg.TrailSync;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.matvdg.TrailSync.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Release;
+		};
 		F69E79752EB7C45300991324 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -379,6 +588,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F65E51B32EBCFB8E00901C2B /* Build configuration list for PBXNativeTarget "TrailSyncWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F65E51B42EBCFB8E00901C2B /* Debug */,
+				F65E51B52EBCFB8E00901C2B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F69E79612EB7C45300991324 /* Build configuration list for PBXProject "TrailSync" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

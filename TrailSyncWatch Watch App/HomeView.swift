@@ -1,4 +1,3 @@
-#if !os(macOS)
 import SwiftUI
 import SwiftData
 
@@ -7,6 +6,7 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var trails: [Trail]
     @State private var showWorkoutView: Bool = false
+    @State private var showActions = false
     
     var body: some View {
         Group {
@@ -33,22 +33,18 @@ struct HomeView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .automatic) {
-                Menu {
-                    ForEach(WorkoutActivity.allCases) { activity in
-                        NavigationLink {
-                            activity.destinationView()
-                        } label: {
-                            Label(activity.title, systemImage: activity.iconName)
-                        }
-                    }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showActions = true
                 } label: {
-                    if #available(iOS 26, *) {
-                        Image(systemName: "plus")
-                    } else {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 28))
-                    }
+                    Image(systemName: "plus")
+                }
+            }
+        }
+        .confirmationDialog("Add", isPresented: $showActions) {
+            ForEach(WorkoutActivity.allCases) { activity in
+                NavigationLink(activity.localized) {
+                    activity.destinationView()
                 }
             }
         }
@@ -67,4 +63,3 @@ struct HomeView: View {
     HomeView()
         .modelContainer(ModelContainer.shared)
 }
-#endif

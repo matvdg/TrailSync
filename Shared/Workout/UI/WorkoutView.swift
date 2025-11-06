@@ -1,3 +1,4 @@
+#if !os(macOS)
 import SwiftUI
 import HealthKit
 import CoreLocation
@@ -17,6 +18,7 @@ struct WorkoutView: View {
     @State private var workouts: [HKWorkout] = []
     @State var locations: [CLLocation] = []
     @State var showWorkoutMapView: Bool = false
+    @State private var showActions = false
     
     private let workoutRepository = WorkoutRepository()
     
@@ -43,6 +45,7 @@ struct WorkoutView: View {
     var body: some View {
                     
             VStack {
+                #if !os(watchOS)
                 HStack(alignment: .center, spacing: 8) {
                     if minDistance == 0 {
                         Text("DisplayAll")
@@ -53,6 +56,7 @@ struct WorkoutView: View {
                     })
                 }
                 .padding(.horizontal, 45)
+                #endif
                 Text("Results \(sortedWorkouts.count)").font(.footnote)
                 List {
                     
@@ -72,7 +76,15 @@ struct WorkoutView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .automatic) {
+                ToolbarItem(placement: .topBarTrailing) {
+                    #if os(watchOS)
+                    Button {
+                        showActions = true
+                    } label: {
+                        Image(systemName: "arrow.up.arrow.down.circle")
+                    }
+                    .modifier(ButtonStyleProminentModifier())
+                    #else
                     Menu {
                         ForEach(Sorting.allCases) { sort in
                             Button {
@@ -92,12 +104,22 @@ struct WorkoutView: View {
                     } label: {
                         Image(systemName: "arrow.up.arrow.down.circle")
                     }
+                    #endif
                 }
             }
             .navigationTitle("Import")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $showWorkoutMapView) {
                 WorkoutMapView(coordinates: locations)
+            }
+            .confirmationDialog("Sort", isPresented: $showActions) {
+                ForEach(Sorting.allCases) { sort in
+                    Button {
+                        sorting = sort
+                    } label: {
+                        Text(sort.localized)
+                    }
+                }
             }
     }
 }
@@ -107,3 +129,4 @@ struct WorkoutView: View {
         WorkoutView(workoutActivity: .cycling)
     }
 }
+#endif

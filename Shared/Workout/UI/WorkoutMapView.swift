@@ -49,8 +49,10 @@ struct WorkoutMapView: View {
         }
         .mapControls {
             MapCompass()
+            #if !os(watchOS)
             MapPitchToggle()
             MapScaleView()
+            #endif
         }
     }
 }

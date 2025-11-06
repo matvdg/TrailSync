@@ -21,10 +21,12 @@ enum WorkoutActivity: String, Identifiable, CaseIterable, Equatable {
     }
     #endif
     
+#if !os(macOS)
     @ViewBuilder
     func destinationView() -> some View {
         WorkoutView(workoutActivity: self)
     }
+#endif
     
     var icon: Image { Image(systemName: iconName) }
     

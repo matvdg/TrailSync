@@ -1,3 +1,4 @@
+#if !os(macOS)
 import Foundation
 import HealthKit
 import SwiftUI
@@ -105,3 +106,4 @@ class WorkoutRepository {
         }
     }
 }
+#endif

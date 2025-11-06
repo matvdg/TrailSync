@@ -1,3 +1,4 @@
+#if !os(macOS)
 import HealthKit
 import SwiftUI
 import CoreLocation
@@ -46,7 +47,7 @@ struct WorkoutRow: View {
             Spacer()
             HStack(alignment: .center, spacing: 8) {
                 Button {
-                    Feedback.selected()
+                    Feedback.selectionChanged.play()
                     Task {
                         do {
                             isLoadingMap = true
@@ -69,7 +70,7 @@ struct WorkoutRow: View {
                 .disabled(isLoadingMap)
                 .modifier(ButtonStyleProminentModifier())
                 Button {
-                    Feedback.selected()
+                    Feedback.selectionChanged.play()
                     Task {
                         do {
                             isLoading = true
@@ -103,6 +104,7 @@ struct WorkoutRow: View {
 }
 
 @available(iOS, deprecated: 17.0)
+@available(watchOS, deprecated: 10.0)
 #Preview {
     
     @Previewable @State var locations: [CLLocation] = []
@@ -156,3 +158,4 @@ struct WorkoutRow: View {
         }
     }
 }
+#endif
