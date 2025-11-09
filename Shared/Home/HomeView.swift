@@ -12,7 +12,7 @@ struct HomeView: View {
     private let trailRepository = TrailRepository()
     
     var body: some View {
-        NavigationSplitView {
+        
             Group {
                 if trails.isEmpty {
                     VStack {
@@ -70,9 +70,7 @@ struct HomeView: View {
                 }
             }
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-        } detail: {
-            Label("SelectInSidebar", systemImage: "sidebar.left")
-        }
+        
 #if !os(macOS)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -108,6 +106,9 @@ struct HomeView: View {
                     activity.destinationView()
                 }
             }
+        }
+        .onAppear {
+            print("ℹ️ Trails count: \(trails.count)")
         }
 #endif
     }

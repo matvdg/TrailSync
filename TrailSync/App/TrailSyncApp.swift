@@ -55,9 +55,13 @@ struct TrailSyncApp: App {
     var body: some Scene {
         WindowGroup {
 #if os(macOS)
-            HomeView()
+            NavigationSplitView {
+                HomeView()
+            } detail: {
+                Label("SelectInSidebar", systemImage: "sidebar.left")
+            }
 #else
-            NavigationStack {
+            NavigationSplitView {
                 HomeView()
                 #if os(iOS)
                     .navigationDestination(item: $quickActionCoordinator.launchedQuickAction) { shortcut in
@@ -67,6 +71,8 @@ struct TrailSyncApp: App {
                         UIApplication.shared.shortcutItems = WorkoutActivity.allCases.map { $0.shortcutItem }
                     }
                 #endif
+            } detail: {
+                Label("SelectInSidebar", systemImage: "sidebar.left")
             }
 #endif
         }
