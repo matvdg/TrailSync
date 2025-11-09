@@ -10,9 +10,19 @@ class TrailRepository {
         do { try context.save() } catch { print("Save error:", error) }
     }
     
-    func delete(trail: Trail, context: ModelContext) {
-        context.delete(trail)
-        do { try context.save() } catch { print("Save error:", error) }
+    func delete(trailID: PersistentIdentifier, container: ModelContainer) {
+
+        Task.detached(priority: .userInitiated) {
+            let backgroundContext = ModelContext(container)
+            if let trailToDelete = backgroundContext.model(for: trailID) as? Trail {
+                backgroundContext.delete(trailToDelete)
+                do {
+                    try backgroundContext.save()
+                } catch {
+                    print("Save error:", error)
+                }
+            }
+        }
     }
     
 }

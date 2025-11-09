@@ -34,14 +34,14 @@ struct HomeView: View {
                             .swipeActions {
                                 if #available(iOS 26, *) {
                                     Button(role: .destructive) {
-                                        trailRepository.delete(trail: trail, context: context)
+                                        trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
                                     } label: {
                                         Label("Delete", systemImage: "trash")
                                     }
                                 } else {
                                     // Fallback on earlier versions
                                     Button {
-                                        trailRepository.delete(trail: trail, context: context)
+                                        trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
                                     } label: {
                                         Label("Delete", systemImage: "trash")
                                     }
@@ -51,14 +51,14 @@ struct HomeView: View {
                             .contextMenu {
                                 if #available(iOS 26, *) {
                                     Button(role: .destructive) {
-                                        trailRepository.delete(trail: trail, context: context)
+                                        trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
                                     } label: {
                                         Label("Delete", systemImage: "trash")
                                     }
                                 } else {
                                     // Fallback on earlier versions
                                     Button {
-                                        trailRepository.delete(trail: trail, context: context)
+                                        trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
                                     } label: {
                                         Label("Delete", systemImage: "trash")
                                     }
