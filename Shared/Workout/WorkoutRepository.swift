@@ -1,4 +1,4 @@
-#if !os(macOS)
+#if !os(macOS) && !os(tvOS)
 import Foundation
 import HealthKit
 import SwiftUI
@@ -25,7 +25,12 @@ class WorkoutRepository {
         // Request permissions
         try await store.requestAuthorization(toShare: [], read: typesToRead)
         
-        return try await executeWorkoutsSampleQuery(for: activityType)
+        let workouts = try await executeWorkoutsSampleQuery(for: activityType)
+        let filtered = workouts.filter { workout in
+            let isIndoor = (workout.metadata?[HKMetadataKeyIndoorWorkout] as? Bool) ?? false
+            return !isIndoor
+        }
+        return filtered
     }
     
     private func executeWorkoutsSampleQuery(for activityType: HKWorkoutActivityType) async throws -> [HKWorkout] {
@@ -67,6 +72,23 @@ class WorkoutRepository {
                 } else if let route = results?.first as? HKWorkoutRoute {
                     continuation.resume(returning: route)
                 } else {
+                    // 🏃‍♂️ Debug route query for workout
+                    print("🏃‍♂️ Debug route query for workout:", workout.uuid)
+                    print("  Start:", workout.startDate)
+                    print("  End:", workout.endDate)
+                    
+                    if let results = results {
+                        print("  Number of routes:", results.count)
+                        for (i, sample) in results.enumerated() {
+                            print("    Route[\(i)] type:", type(of: sample))
+                        }
+                    } else {
+                        print("  Results are nil")
+                    }
+                    print("Device:", workout.device?.name ?? "unknown")
+                    print("Source:", workout.sourceRevision.source.name)
+                    print("Bundle:", workout.sourceRevision.source.bundleIdentifier)
+                    print("Metadata:", workout.metadata ?? [:])
                     continuation.resume(returning: nil)
                 }
             }

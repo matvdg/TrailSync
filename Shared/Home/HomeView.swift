@@ -13,65 +13,67 @@ struct HomeView: View {
     
     var body: some View {
         
-            Group {
-                if trails.isEmpty {
-                    VStack {
-                        ContentUnavailableView(
-                            "EmptyTrailsTitle",
-                            systemImage: "signpost.right.and.left",
-                            description: Text("EmptyTrailsDescription")
-                        )
-                        Spacer()
-                    }
-                } else {
-                    List {
-                        ForEach(trails) { trail in
-                            NavigationLink {
-                                TrailView(trail: trail)
-                            } label: {
-                                TrailRow(trail: trail)
-                            }
-                            .swipeActions {
-                                if #available(iOS 26, *) {
-                                    Button(role: .destructive) {
-                                        trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                } else {
-                                    // Fallback on earlier versions
-                                    Button {
-                                        trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
-                            }
-                            #if !os(watchOS)
-                            .contextMenu {
-                                if #available(iOS 26, *) {
-                                    Button(role: .destructive) {
-                                        trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                } else {
-                                    // Fallback on earlier versions
-                                    Button {
-                                        trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
-                            }
-                            #endif
+        Group {
+            if trails.isEmpty {
+                VStack {
+                    ContentUnavailableView(
+                        "EmptyTrailsTitle",
+                        systemImage: "signpost.right.and.left",
+                        description: Text("EmptyTrailsDescription")
+                    )
+                    Spacer()
+                }
+            } else {
+                List {
+                    ForEach(trails) { trail in
+                        NavigationLink {
+                            TrailView(trail: trail)
+                        } label: {
+                            TrailRow(trail: trail)
                         }
+#if !os(tvOS)
+                        .swipeActions {
+                            if #available(iOS 26, *) {
+                                Button(role: .destructive) {
+                                    trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            } else {
+                                // Fallback on earlier versions
+                                Button {
+                                    trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                        }
+#endif
+#if !os(watchOS)
+                        .contextMenu {
+                            if #available(iOS 26, *) {
+                                Button(role: .destructive) {
+                                    trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            } else {
+                                // Fallback on earlier versions
+                                Button {
+                                    trailRepository.delete(trailID: trail.id, container: ModelContainer.shared)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                        }
+#endif
                     }
                 }
             }
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
+        }
+        .navigationSplitViewColumnWidth(min: 180, ideal: 200)
         
-#if !os(macOS)
+#if !os(macOS) && !os(tvOS)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
 #if os(watchOS)

@@ -1,4 +1,4 @@
-#if !os(macOS)
+#if !os(macOS) && !os(tvOS)
 import HealthKit
 import SwiftUI
 import CoreLocation
@@ -74,7 +74,7 @@ struct WorkoutRow: View {
                     Task {
                         do {
                             isLoading = true
-                            let locations = try await workoutRepository.getLocations(for: workout).map { Location(location: $0) }
+                            let locations = try await workoutRepository.getLocations(for: workout)
                             trailRepository.create(from: workout, locations: locations, context: context)
                             isLoading = false
                             dismiss()

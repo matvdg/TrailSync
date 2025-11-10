@@ -14,7 +14,8 @@ class GpxRepository {
     /// - Returns: The URL of the saved GPX file.
     func exportTrailToGPX(_ trail: Trail) throws -> URL {
         // Check if the trail has valid sortedCLLocations
-        guard let locations = trail.sortedCLLocations, !locations.isEmpty else {
+        let locations = trail.locations
+        guard !locations.isEmpty else {
             throw GPXExportError.noLocations
         }
         
@@ -34,8 +35,8 @@ class GpxRepository {
         
         // Convert each CLLocation to a GPXTrackPoint and add it to the segment
         for location in locations {
-            let trackPoint = GPXTrackPoint(elevation: location.altitude, time: location.timestamp, latitude: location.coordinate.latitude,
-                                           longitude: location.coordinate.longitude)
+            let trackPoint = GPXTrackPoint(elevation: location.altitude, time: location.date, latitude: location.latitude,
+                                           longitude: location.longitude)
             segment.add(trackpoint: trackPoint)
         }
         

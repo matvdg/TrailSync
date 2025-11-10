@@ -1,14 +1,20 @@
+
 import Foundation
-import HealthKit
 import SwiftData
+import CoreLocation
+#if canImport(HealthKit)
+import HealthKit
+#endif
 
 class TrailRepository {
     
-    func create(from workout: HKWorkout, locations: [Location], context: ModelContext) {
+#if os(watchOS) || os(iOS) || os(visionOS)
+    func create(from workout: HKWorkout, locations: [CLLocation], context: ModelContext) {
         let trail = Trail(workout: workout, locations: locations)
         context.insert(trail)
         do { try context.save() } catch { print("Save error:", error) }
     }
+    #endif
     
     func delete(trailID: PersistentIdentifier, container: ModelContainer) {
 

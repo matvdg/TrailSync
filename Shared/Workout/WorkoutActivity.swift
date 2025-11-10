@@ -1,5 +1,7 @@
 import SwiftUI
+#if !os(macOS) && !os(tvOS)
 import HealthKit
+#endif
 
 enum WorkoutActivity: String, Identifiable, CaseIterable, Equatable {
     
@@ -8,6 +10,17 @@ enum WorkoutActivity: String, Identifiable, CaseIterable, Equatable {
     var id: String { rawValue }
     var title: String { NSLocalizedString(rawValue.capitalized, comment: "") }
     var localized: LocalizedStringKey { LocalizedStringKey(rawValue.capitalized) }
+    
+    var icon: Image { Image(systemName: iconName) }
+    
+    var iconName: String {
+        switch self {
+        case .hiking: return "figure.hiking"
+        case .walking: return "figure.walk"
+        case .running: return "figure.run"
+        case .cycling: return "figure.outdoor.cycle"
+        }
+    }
     
     #if os(iOS)
     var shortcutItem: UIApplicationShortcutItem {
@@ -21,22 +34,10 @@ enum WorkoutActivity: String, Identifiable, CaseIterable, Equatable {
     }
     #endif
     
-#if !os(macOS)
+#if !os(macOS) && !os(tvOS)
     @ViewBuilder
     func destinationView() -> some View {
         WorkoutView(workoutActivity: self)
-    }
-#endif
-    
-    var icon: Image { Image(systemName: iconName) }
-    
-    var iconName: String {
-        switch self {
-        case .hiking: return "figure.hiking"
-        case .walking: return "figure.walk"
-        case .running: return "figure.run"
-        case .cycling: return "figure.outdoor.cycle"
-        }
     }
     
     var activity: HKWorkoutActivityType {
@@ -56,4 +57,6 @@ enum WorkoutActivity: String, Identifiable, CaseIterable, Equatable {
         default: return .cycling
         }
     }
+#endif
+    
 }
