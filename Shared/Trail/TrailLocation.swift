@@ -40,7 +40,7 @@ struct TrailLocation: Codable {
         .sorted { $0.timestamp < $1.timestamp }
 
         // Diagnostic summary log - can be commented out or removed later
-        print("ℹ️  Filtering summary: total points : \(locations.count) Invalid coordinates filtered out: \(invalidCoordinateCount), Bad horizontal accuracy filtered out: \(badHorizontalAccuracyCount), Total valid points retained: \(filtered.count), first = \(locations.first!.timestamp), last = \(locations.last!.timestamp)")
+//        print("ℹ️  Filtering summary: total points : \(locations.count) Invalid coordinates filtered out: \(invalidCoordinateCount), Bad horizontal accuracy filtered out: \(badHorizontalAccuracyCount), Total valid points retained: \(filtered.count), first = \(locations.first!.timestamp), last = \(locations.last!.timestamp)")
 
         return filtered
     }
@@ -55,7 +55,19 @@ struct TrailLocation: Codable {
                           altitude: validAltitude,
                           date: location.timestamp)
         }
-        return try JSONEncoder().encode(trailLocations)
+        let data = try JSONEncoder().encode(trailLocations)
+        let sizeInBytes = data.count
+        let sizeInKB = Double(sizeInBytes) / 1024.0
+        print("💾 Size of encoded locations: \(String(format: "%.2f", sizeInKB)) Ko")
+        return data
+    }
+
+    /// Returns the encoded data size (in kilobytes) for the given array of CLLocation objects.
+    static func encodedDataSize(for locations: [CLLocation]) throws -> Double {
+        let data = try encode(locations)
+        let sizeInKB = Double(data.count) / 1024.0
+        // print("💾 Encoded data size: \(String(format: "%.2f", sizeInKB)) KB")
+        return sizeInKB
     }
 
     /// Decodes Data into an array of TrailLocation objects.

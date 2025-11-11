@@ -47,7 +47,7 @@ final class Trail {
         self.encodedTrack = try? TrailLocation.encode(locations)
     }
 
-#if canImport(HealthKit)
+#if !os(macOS) && !os(tvOS)
     @MainActor
     convenience init(workout: HKWorkout, locations: [CLLocation]) {
         let activityTypeName = WorkoutActivity.activity(from: workout.workoutActivityType).id
